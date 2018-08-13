@@ -30,12 +30,14 @@ import SelectInput from '@tele2/react-native-select-input';
 
 class MyComponent extends Component {
   render() {
-    <SelectInput
-      options={[{
-        value: 'my-option-value',
-        label: 'My option label',
-      }]}
-    />
+    return (
+      <SelectInput
+        options={[{
+          value: 'my-option-value',
+          label: 'My option label',
+        }]}
+      />
+    );
   }
 }
 
