@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
@@ -9,10 +9,10 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native';
-import Icon, { ARROW_ICON_TYPES } from './Icon';
+import Icon, {ARROW_ICON_TYPES} from './Icon';
 import Picker from './Picker';
 import Loading from './Loading';
-import { testProperties } from './TestProperties';
+import {testProperties} from './TestProperties';
 
 class SelectInput extends Component {
   static propTypes = {
@@ -126,7 +126,8 @@ class SelectInput extends Component {
       light: '#D9D9D9',
       dark: '#545454',
     },
-    onChange: () => {},
+    onChange: () => {
+    },
     renderLabel: null,
     labelProps: {},
     valueProps: {},
@@ -159,9 +160,9 @@ class SelectInput extends Component {
   }
 
   getValue = () => {
-    const { options, placeholder } = this.props;
+    const {options, placeholder} = this.props;
 
-    const selectedOption = options.find(({ value }) => value === this.state.value);
+    const selectedOption = options.find(({value}) => value === this.state.value);
 
     if (selectedOption) {
       return selectedOption.label;
@@ -189,12 +190,12 @@ class SelectInput extends Component {
   };
 
   renderValue = () => {
-    const { loading, disabled, loadingContainerStyle, valueStyle, valueProps } = this.props;
+    const {loading, disabled, loadingContainerStyle, valueStyle, valueProps} = this.props;
 
     if (loading) {
       return (
         <View style={[this.styles.loadingContainer, loadingContainerStyle]}>
-          <Loading />
+          <Loading/>
         </View>
       );
     }
@@ -246,7 +247,7 @@ class SelectInput extends Component {
   };
 
   render() {
-    const { value, optionsVisible } = this.state;
+    const {value, optionsVisible} = this.state;
     const {
       label,
       disabled,
@@ -266,22 +267,34 @@ class SelectInput extends Component {
           onPress={this.handleToggleShowOptions}
           {...testProperties('select', testProperty)}
         >
-          <View
-            style={[
-              this.styles.innerContainer,
-              this.state.optionsVisible && this.styles.activeInnerContainer,
-              innerContainerStyle,
-            ]}
-          >
-            {this.renderLabel()}
+          <View style={[
+            this.styles.innerContainer,
+            this.state.optionsVisible && this.styles.activeInnerContainer,
+            innerContainerStyle,
+          ]}>
+            <View>
+              {this.renderLabel()}
 
-            <View style={[this.styles.valueContainer, valueContainerStyle]}>
-              {this.renderValue()}
-
+              <View style={[this.styles.valueContainer, valueContainerStyle]}>
+                {this.renderValue()}
+              </View>
+            </View>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingTop: 4
+            }}>
               <Icon
                 disabled={disabled}
                 loading={loading}
                 type={optionsVisible ? ARROW_ICON_TYPES.UP : ARROW_ICON_TYPES.DOWN}
+                style={{
+                  width: 16,
+                  height: 16,
+                  resizeMode: 'contain',
+                  tintColor: "#9b9b9b",
+                }}
                 tintColor={(disabled || loading) ? colors.normal : colors.dark}
                 renderArrowIcon={renderArrowIcon}
               />
@@ -305,21 +318,22 @@ class SelectInput extends Component {
   }
 }
 
-const styles = ({ colors }) => StyleSheet.create({
+const styles = ({colors}) => StyleSheet.create({
   container: {
     zIndex: 1,
     flex: 1,
   },
   innerContainer: {
     flex: 1,
-    marginBottom: 28,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.light,
-    paddingVertical: 10,
+    borderWidth: 0.5,
+    borderColor: colors.light,
+    padding: 10,
+    borderRadius: 4,
+    flexDirection: 'row'
   },
   activeInnerContainer: {
-    borderBottomWidth: 2,
-    borderBottomColor: colors.dark,
+    borderWidth: 0.7,
+    borderColor: colors.dark,
   },
   label: {
     color: colors.normal,
@@ -334,12 +348,12 @@ const styles = ({ colors }) => StyleSheet.create({
     justifyContent: 'space-between',
   },
   loadingContainer: {
-    paddingTop: Platform.OS === 'ios' ? 9 : 15,
+    paddingTop: Platform.OS === 'ios' ? 1 : 7,
   },
   value: {
     fontSize: 14,
     color: colors.dark,
-    paddingTop: Platform.OS === 'ios' ? 9 : 15,
+    paddingTop: Platform.OS === 'ios' ? 1 : 7,
     marginRight: 15,
   },
   valueDisabled: {
